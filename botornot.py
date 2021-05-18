@@ -14,9 +14,10 @@ class bot_or_not:
 		followers_count = self.user.followers_count
 		friends_count = self.user.friends_count
 		listed_count = self.user.listed_count
+		favourites_count = self.user.favourites_count
 		verified = self.user.verified
 
-		return [followers_count,friends_count,listed_count,verified]
+		return [followers_count,friends_count,listed_count,favourites_count,verified]
 
 	def make_prediction(self,user_info):
 		with open('twitter_decision_tree_model.pkl', 'rb') as model_file:
@@ -31,7 +32,7 @@ class bot_or_not:
 		return classification
 
 	def print_findings(self, user_info,classification):
-		print("Twitter user %s's stats:\n\tfollowers: %s\n\tfriends: %s\n\tappearances in lists: %s\n\tis verified: %s"%(sys.argv[1],user_info[0],user_info[1],user_info[2],user_info[3]))
+		print("Twitter user %s's stats:\n\tfollowers: %s\n\tfriends: %s\n\tappearances in lists: %s\n\tfavourites: %s \n\tis verified: %s"%(sys.argv[1],user_info[0],user_info[1],user_info[2],user_info[3],user_info[4]))
 		print("\nOur model classifies this account as a %s"%classification)
 
 

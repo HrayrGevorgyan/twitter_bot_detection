@@ -15,30 +15,12 @@ from sklearn.decomposition import PCA
 import pickle
 
 pd.set_option('display.max_rows', None)
-relevant_data = ["followers_count","friends_count", "listedcount","verified","bot"]
+relevant_data = ["followers_count","friends_count", "listedcount", "favourites_count", "verified","bot"]
 data = pd.read_csv('bot_data.csv')
 data = data[relevant_data]
-X = data[["followers_count","friends_count", "listedcount", "verified"]]
+X = data[["followers_count","friends_count", "listedcount", "favourites_count","verified"]]
 Y = data[["bot"]]
 data.head()
-
-
-pca = PCA(n_components = 2)
-X_pca = pd.DataFrame(data = pca.fit_transform(StandardScaler().fit_transform(X)),columns= ['1','2'])
-XY_pca = pd.concat([X_pca,Y], axis=1)
-plot = sns.scatterplot(x='1',y='2',data=XY_pca,hue="bot").set_title('PCA of 9 tumor types')
-
-
-
-
-X_train, X_test, Y_train, Y_test = train_test_split(StandardScaler().fit_transform(X), Y, test_size=0.2, random_state=0)
-
-model = model = LinearSVC(multi_class = 'ovr', class_weight = 'balanced')
-model.fit(X_train,Y_train)
-
-print('Accuracy of linear SVC on training set: {:.2f}'.format(model.score(X_train, Y_train)))
-
-print('Accuracy of linear SVC on test set: {:.2f}'.format(model.score(X_test, Y_test)))
 
 
 X_train, X_test, Y_train, Y_test = train_test_split(X, Y, test_size=0.2, random_state=0)
